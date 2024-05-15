@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include<stdbool.h>
+#include<conio.h>
+bool plindrome(int array[],int i,int j)
+{
+    int mid =(i+j)/2;
+    for( i=0; i<mid; i++)
+    {
+        j--;
+        if(array[i]!=array[j])
+        {
+            return false;
+
+        }
+    }
+    return true;
+}
+int main()
+
+{
+    int n=6;
+    int a[n];
+    int i=0;
+    for(int i=0; i<n; i++)
+    {
+        printf(" \n");
+        scanf("%d",&a[i]);
+    }
+
+    if(plindrome(a,0,n)==true)
+    {
+        printf("This is plindrome");
+
+    }
+    else
+    {
+        printf("This is not plindrome.");
+    }
+}
