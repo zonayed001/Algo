@@ -1,0 +1,40 @@
+#include <stdio.h>
+void insertionsort(int a[],int n)
+//Insertionsort//
+{
+    int i,j,temp;
+    for(i=1; i<n; i++)
+    {
+        for(j=i; j>0&&a[j-1]>a[j]; j--)
+        {
+            temp=a[j];
+            a[j]=a[j-1];
+            a[j-1]=temp;
+        }
+    }
+}
+
+int main()
+{
+    int n=5;
+    int a[n];
+    int i=0;
+    for(int i=0; i<n; i++)
+    {
+        printf(" \n");
+        scanf("%d",&a[i]);
+    }
+    printf(" Array=");
+    for(int i=0; i<n; i++)
+    {
+
+        printf(" %d",a[i]);
+    }
+    insertionsort(a,n);
+    printf("\n Array insertionsort=");
+    for(int i=0; i<n; i++)
+    {
+
+        printf(" %d",a[i]);
+    }
+}
