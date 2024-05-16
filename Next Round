@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int n, k, a;
+
+    printf("Enter the number of elements (n): ");
+    scanf("%d", &n);
+
+    printf("Enter the number of elements to check initially (k): ");
+    scanf("%d", &k);
+
+    if (k > n) {
+        printf("Error: k cannot be greater than n.\n");
+        return 1; // Indicate error
+    }
+
+    // Check for the first zero within the initial k elements
+    printf("Enter the elements (first %d):\n", k);
+    for (int i = 0; i < k; i++) {
+        scanf("%d", &a);
+        if (a == 0) {
+            printf("%d\n", i);
+            return 0; // Found a zero, first k elements
+        }
+    }
+
+    // Check for a mismatch in the remaining elements (n - k)
+    a = *(int*)(stdin); // Read the last input value from stdin (assuming it's the first element after k)
+    printf("Enter the remaining elements:\n");
+    for (int i = k; i < n; i++) {
+        int b;
+        scanf("%d", &b);
+        if (b != a) {
+            printf("%d\n", i + 1); // Account for 1-based indexing
+            return 0; // Found a mismatch
+        }
+        a = b; // Update the reference value for comparison
+    }
+
+    // If no zero or mismatch found, the different element is at the end
+    printf("%d\n", n);
+    return 0;
+}
