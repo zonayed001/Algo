@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int t, n, iq;
+    int max_difference;
+
+    printf("Enter the number of test cases: ");
+    scanf("%d", &t);
+
+    while (t--) {
+        max_difference = -1000000000; // Initialize max difference
+
+        printf("Enter the number of students: ");
+        scanf("%d", &n);
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &iq);
+
+            // Calculate and update max difference
+            max_difference = fmax(max_difference, abs(iq - max_difference)); // Efficiently use abs() and fmax()
+
+            // Update best IQ if necessary
+            max_difference = fmax(max_difference, iq); // Update using fmax()
+        }
+
+        printf("Maximum difference in IQ: %d\n", max_difference);
+    }
+
+    return 0;
+}
