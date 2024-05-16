@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h> // For binary search (qsort)
+
+unsigned int heights[50005];
+
+int compare_heights(const void *a, const void *b) {
+    unsigned int height1 = *(unsigned int*)a;
+    unsigned int height2 = *(unsigned int*)b;
+    return (height1 - height2);
+}
+
+int main() {
+    int N;
+    printf("Enter the number of elements (N): ");
+    scanf("%d", &N);
+
+    printf("Enter the elements of the array (space-separated): ");
+    for (int i = 0; i < N; ++i) {
+        scanf("%u", &heights[i]);
+    }
+
+    int Q;
+    printf("Enter the number of queries (Q): ");
+    scanf("%d", &Q);
+
+    // Sort the heights array in ascending order
+    qsort(heights, N, sizeof(unsigned int), compare_heights);
+
+    while (Q--) {
+        int height;
+        printf("Enter the query height: ");
+        scanf("%d", &height);
+
+        // Use binary search to find the element greater than or equal to the query height
+        unsigned int *above = (unsigned int *)bsearch(&height, heights, N, sizeof(unsigned int), compare_heights);
+
+        // Handle cases where the query height is not found
+        if (above == NULL) {
+            printf("X X\n"); // No element below or above the query height
+            continue;
+        }
+
+        // Find the element immediately below the query height (if it exists)
+        unsigned int *below = above;
+        while (below >= heights && *(below - 1) == height) {
+            below--;
+        }
+
+        // Print the element below the query height (or "X" if not found)
+        if (below >= heights) {
+            printf("%u ", *(below));
+        } else {
+            printf("X ");
+        }
+
+        // Print the element above the query height (or "X" if at the end)
+        if (above == heights + N) {
+            printf("X\n");
+        } else {
+            printf("%u\n", *above);
+        }
+    }
+
+    return 0;
+}
