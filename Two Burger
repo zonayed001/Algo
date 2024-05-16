@@ -1,0 +1,70 @@
+#include <stdio.h>
+int price(int bun,int beef,int Chicken,int BeefBurger,int ChickenBurger)
+{
+//TWO BURGER
+
+    int Burger=bun/2;
+    int take=0;
+    int a=0;
+    int b=0;
+    if (ChickenBurger>BeefBurger)
+    {
+        if(Burger>ChickenBurger)
+        {
+            take=Burger*ChickenBurger;
+        }
+        else
+        {
+            a=Burger-Chicken;
+            take=Chicken*ChickenBurger;
+            if (a>beef)
+            {
+                take=take+beef*BeefBurger;
+            }
+            else
+            {
+                take=take+a*BeefBurger;
+
+            }
+        }
+    }
+    else
+    {
+        if(Burger>BeefBurger)
+        {
+            take=Burger*BeefBurger;
+        }
+        else
+        {
+            b=Burger-beef;
+            take=beef*BeefBurger;
+            if (b>Chicken)
+            {
+                take=take+Chicken*ChickenBurger;
+            }
+            else
+            {
+                take=take+a*Chicken;
+
+            }
+        }
+    }
+    return take;
+
+}
+int main()
+{
+    int bun, beef, Chicken,BeefBurger,ChickenBurger;
+
+    int ans,c;
+    printf("Enter case = ");
+    scanf("%d",&c);
+
+    for(int i=1; i<=c; i++)
+    {
+        scanf("%d %d %d %d %d", &bun, &beef, &Chicken,&BeefBurger,&ChickenBurger);
+        int ans=price(bun,beef,Chicken,BeefBurger,ChickenBurger);
+        printf(" case %d= best price %d",i,ans);
+    }
+    return 0;
+}
