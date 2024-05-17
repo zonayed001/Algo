@@ -1,0 +1,77 @@
+vacation 50
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_VACATIONS 10
+
+typedef struct {
+    char destination[50];
+    int duration; // Days
+    float cost;
+} Vacation;
+
+int main() {
+    Vacation vacations[MAX_VACATIONS];
+    int numVacations = 0;
+
+    while (1) {
+        int choice;
+
+        printf("\nVacation Tracker\n");
+        printf("1. Add vacation\n");
+        printf("2. List vacations\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+
+        if (scanf("%d", &choice) != 1) {
+            fprintf(stderr, "Invalid input. Please enter a number.\n");
+            scanf("%*[^\n]"); // Clear input buffer
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                if (numVacations == MAX_VACATIONS) {
+                    printf("Maximum number of vacations reached.\n");
+                } else {
+                    printf("Enter destination: ");
+                    scanf(" %[^\n]", vacations[numVacations].destination); // Read entire line for destination
+
+                    printf("Enter duration (days): ");
+                    if (scanf("%d", &vacations[numVacations].duration) != 1 || vacations[numVacations].duration <= 0) {
+                        fprintf(stderr, "Invalid input. Please enter a positive integer.\n");
+                        scanf("%*[^\n]"); // Clear input buffer
+                        continue;
+                    }
+
+                    printf("Enter cost: ");
+                    if (scanf("%f", &vacations[numVacations].cost) != 1 || vacations[numVacations].cost < 0) {
+                        fprintf(stderr, "Invalid input. Please enter a non-negative value.\n");
+                        scanf("%*[^\n]"); // Clear input buffer
+                        continue;
+                    }
+
+                    numVacations++;
+                    printf("Vacation added successfully.\n");
+                }
+                break;
+            case 2:
+                if (numVacations == 0) {
+                    printf("No vacations added yet.\n");
+                } else {
+                    printf("\nVacations:\n");
+                    for (int i = 0; i < numVacations; i++) {
+                        printf("- %s (%d days, %.2f)\n", vacations[i].destination, vacations[i].duration, vacations[i].cost);
+                    }
+                }
+                break;
+            case 3:
+                printf("Exiting vacation tracker.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+} 
