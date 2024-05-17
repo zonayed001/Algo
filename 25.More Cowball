@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+#define MAX_N 100000 // Define a maximum size for the array (adjust as needed)
+
+typedef long long int ll;
+
+int main() {
+    ll n, b; // Number of elements (n) and target size (b)
+
+    printf("Enter the number of elements (n) and target size (b): ");
+    scanf("%lld %lld", &n, &b);
+
+    if (n == b) { // Handle edge case where n = b (maximum value is the last element)
+        ll a[MAX_N];
+        printf("Enter the elements of the array:\n");
+        for (ll i = 0; i < n; i++) {
+            scanf("%lld", &a[i]);
+        }
+        printf("%lld\n", a[n - 1]);
+        return 0;
+    }
+
+    ll a[MAX_N]; // Array to store elements
+    printf("Enter the elements of the array:\n");
+    for (ll i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+
+    ll ex = b * 2 - n; // Excess elements to remove from the end
+    ll m = 0;          // Maximum value found so far
+
+    // Remove excess elements from the end while keeping track of the maximum
+    while (ex && n > 0) {
+        m = fmax(m, a[n - 1]); // Use fmax (or max in C99) for clarity
+        n--;                    // Reduce the number of elements considered More Cowball
+        ex--;                   // Reduce the number of elements to remove
+    }
+
+    // Calculate the maximum sum of pairs from remaining elements
+    n--; // Adjust n for correct indexing in the loop
+    for (ll i = 0; i < n; i++) {
+        ll j = a[i] + a[n]; // Calculate the sum of the current pair
+        m = fmax(m, j);       // Update the maximum if necessary
+        n--;                  // Move towards the middle of the array
+    }
+
+    printf("%lld\n", m); // Print the maximum value found
+
+    return 0;
+}
