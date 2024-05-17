@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <algorithm> // For std::sort
+
+#define N 555555
+
+int N, ans;
+int s[N];
+
+int main() {
+    scanf("%d", &N);
+    ans = N;
+
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &s[i]);
+    }
+
+    std::sort(s, s + N); // Use std::sort from the included algorithm header
+
+    // Remove the commented debug print statements as they are not necessary for functionality 24.Counting Kangaroos is Fun
+ 
+
+
+    for (int i = 0, j = (N + 1) / 2; i < N; i++) {
+        if (s[i] == 0) {
+            continue;
+        }
+
+        // Find the first element in the right half (starting from j) that is greater than or equal to 2 * s[i]
+        while (j < N && s[j] < 2 * s[i]) {
+            j++;
+        }
+
+        if (j < N) {
+            s[i] = s[j] = 0; // Set both elements to 0 (considered removed)
+            ans--;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
