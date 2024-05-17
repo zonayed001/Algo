@@ -1,0 +1,114 @@
+minimum spinning tree 
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Edge {
+  int src, dest; // Source and destination vertices of the edge
+  int weight;   // Weight of the edge
+} Edge;
+
+typedef struct Graph {
+  int V, E;  // Number of vertices and edges
+  Edge *edge; // Array of edges
+} Graph;
+
+// Utility function to find the root of a vertex in the parent array
+int find(int parent[], int i) {
+  if (parent[i] == i)
+    return i;
+  return find(parent, parent[i]);
+}
+
+// Function to compare two edges based on their weights
+int myComp(const void *a, const void *b) {
+  Edge *a1 = (Edge *)a;
+  Edge *b1 = (Edge *)b;
+  return a1->weight > b1->weight;
+}
+
+// Function to construct and print MST using Kruskal's Algorithm
+void KruskalMST(Graph *graph) {
+  int V = graph->V;
+  Edge result[V];  // Array to store constructed MST
+  int e = 0;  // An index variable, used for result[]
+  int i = 0;   // Another index variable for sorted edges
+
+  // Step 1: Sort all edges in non-decreasing order of their weight
+  qsort(graph->edge, graph->E, sizeof(graph->edge[0]), myComp);
+
+  // Allocate memory for creating V sets
+  int *parent = (int *)malloc(V * sizeof(int));
+
+  // Make all vertices as separate sets
+  for (int i = 0; i < V; i++)
+    parent[i] = i;
+
+  // Pick edges one by one
+  while (e < V - 1) {
+    // Pick the lowest weight edge and increment the index for selected
+    // edge
+    Edge next_edge = graph->edge[i++];
+
+    // Get the root of both end vertices and check if they belong to
+    // the same set
+    int x = find(parent, next_edge.src);
+    int y = find(parent, next_edge.dest);
+
+    // If they are in different sets, add it to the MST and union the sets
+    if (x != y) {
+      result[e++] = next_edge;
+      parent[x] = y;
+    }
+  }
+
+  // Print the constructed MST
+  printf("Following are the edges in the constructed MST\n");
+  for (i = 0; i < e; ++i)
+    printf("%d -- %d == %d\n", result[i].src, result[i].dest, result[i].weight);
+
+  // Free allocated memory
+  free(parent);
+}
+
+// Create a graph with given vertices and edges
+Graph *createGraph(int V, int E) {
+  Graph *graph = (Graph *)malloc(sizeof(Graph));
+  graph->V = V;
+  graph->E = E;
+
+  graph->edge = (Edge *)malloc(graph->E * sizeof(graph->edge[0]));
+
+  return graph;
+}
+
+int main() {
+  /* Let us create following graph
+          2     3
+      (0)--(1)--(2)
+       |   / \   |
+      6|  /   \  |7
+       | /     \ |
+      (3)-------(4)
+            9          */
+  int V = 5;  // Number of vertices
+  int E = 7;  // Number of edges
+
+  Graph *graph = createGraph(V, E);
+
+  // Add edge 0-1 with weight 2
+  graph->edge[0].src = 0;
+  graph->edge[0].dest = 1;
+  graph->edge[0].weight = 2;
+
+  // Add edge 0-3 with weight 6
+  graph->edge[1].src = 0;
+  graph->edge[1].dest = 3;
+  graph->edge[1].weight = 6;
+
+  // Add edge 1-2 with weight 3
+  graph->edge[2].src = 1;
+  graph->edge[2].dest = 2;
+  graph->edge[2].weight = 3;
+
+  // Add edge 1-4 with weight 9
+  graph-> 
