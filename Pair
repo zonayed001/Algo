@@ -1,0 +1,41 @@
+#include <stdio.h>pair
+#include <string.h>
+
+typedef struct {
+  int first;
+  char second[50]; // Assuming string length limit of 50 characters
+} Pair;
+
+int main() {
+  int n;
+
+  printf("Enter the number of pairs: ");
+  if (scanf("%d", &n) != 1 || n <= 0) {
+    fprintf(stderr, "Invalid input. Please enter a positive integer.\n");
+    return 1;
+  }
+
+  Pair p[n]; // Array of pairs
+
+  // Input data for each pair
+  for (int i = 0; i < n; i++) {
+    printf("Enter integer for pair %d: ", i + 1);
+    if (scanf("%d", &p[i].first) != 1) {
+      fprintf(stderr, "Invalid input. Please enter an integer.\n");
+      return 1;
+    }
+
+    printf("Enter string for pair %d: ", i + 1);
+    if (scanf(" %[^\n]", p[i].second) != 1) { // Read entire line for string
+      fprintf(stderr, "Invalid input. Please enter a string.\n");
+      return 1;
+    }
+  }
+
+  // Print the pairs
+  for (int i = 0; i < n; i++) {
+    printf("Pair %d: %d, %s\n", i + 1, p[i].first, p[i].second);
+  }
+
+  return 0;
+} 
