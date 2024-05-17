@@ -1,0 +1,70 @@
+A Match Making Problem 
+#include <stdio.h>
+
+#define MAX_PEOPLE 100
+
+int main() {
+    int n, i, j;
+
+    printf("Enter the number of people (positive even integer): ");
+    if (scanf("%d", &n) != 1 || n <= 0 || n % 2 != 0) {
+        fprintf(stderr, "Invalid input. Please enter a positive even integer.\n");
+        return 1;
+    }
+
+    int preferences[MAX_PEOPLE][MAX_PEOPLE];
+
+    // Read preferences for each person (n x n matrix)
+    printf("Enter preferences for each person (1 for most preferred, n for least):\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &preferences[i][j]);
+        }
+    }
+
+    // Match making logic using a greedy approach
+    int matched[MAX_PEOPLE]; // Array to store partner for each person
+    bool available[MAX_PEOPLE]; // Array to track availability
+
+    // Initialize all as available
+    for (i = 0; i < n; i++) {
+        available[i] = true;
+        matched[i] = -1; // -1 indicates not matched yet
+    }
+
+    // Iterate until everyone is matched
+    for (i = 0; i < n; i++) {
+        if (available[i]) {
+            int bestMatch = -1;
+            int bestRank = n + 1; // Initialize with worst possible rank
+
+            // Find the most preferred person available for person i
+            for (j = 0; j < n; j++) {
+                if (available[j] && preferences[i][j] < bestRank) {
+                    bestMatch = j;
+                    bestRank = preferences[i][j];
+                }
+            }
+
+            // If a best match is found, pair them up and mark them unavailable
+            if (bestMatch != -1) {
+                matched[i] = bestMatch;
+                matched[bestMatch] = i;
+                available[i] = false;
+                available[bestMatch] = false;
+            }
+        }
+    }
+
+    // Print the matches
+    printf("Matches:\n");
+    for (i = 0; i < n; i++) {
+        if (matched[i] != -1) {
+            printf("Person %d - Person %d\n", i + 1, matched[i] + 1);
+        } else {
+            printf("Person %d - Not Matched\n", i + 1);
+        }
+    }
+
+    return 0;
+} 
