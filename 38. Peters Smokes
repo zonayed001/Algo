@@ -1,0 +1,18 @@
+38. Peters Smokes 
+#include<cstdio> using namespace std;
+
+int main() {
+
+int n, k; while (scanf("%d %d", &n, &k) ==
+
+2) {
+
+(k-1));
+
+}
+
+printf("%d\n", n + (n - 1) /
+
+return 0;
+
+} 
