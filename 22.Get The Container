@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <limits.h> // For INT_MIN
+
+#define N 10005
+
+int main() {
+    int t;
+    scanf("%d", &t); // Read number of test cases
+
+    for (int cs = 1; cs <= t; cs++) {
+        int n, m;  // Number of elements, subarray size
+        scanf("%d %d", &n, &m);
+
+        int a[N]; // Array to store elements
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        // Pre-calculate prefix sums for efficient calculations
+        long long sum[N] = {0};
+        for (int i = 0; i < n; i++) {
+            sum[i + 1] = sum[i] + a[i];
+        }
+
+        long long maxi = INT_MIN; // Initialize maximum subarray sum as minimum possible value
+        long long bb = 0;         // Current subarray sum
+
+        // Find maximum subarray sum that can be divided equally into m subarrays 22.Get The Container 
+        for (int i = 0; i < n; ) {
+            if (bb + a[i] <= maxi) {
+                bb += a[i]; // Include element if it doesn't exceed maximum
+                i++;
+            } else {
+                // Calculate average subarray sum for remaining subarrays (m - (j + 1))
+                long long avg = (sum[i] - bb) / (m - (i + 1));
+                if (bb + a[i] <= avg) {  // Check if element can be included without exceeding average
+                    bb += a[i];
+                    maxi = fmax(maxi, bb); // Update maximum if necessary
+                    i++;
+                } else {
+                    bb = 0; // Reset subarray sum if average cannot be maintained
+                }
+            }
+        }
+
+        printf("Case %d: %lld\n", cs, maxi);
+    }
+
+    return 0;
+}
