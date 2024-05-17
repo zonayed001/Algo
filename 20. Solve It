@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function to be evaluated
+double f(double x) {
+    return p * exp(-x) + q * sin(x) + r * cos(x) + s * tan(x) + t * x * x + u;
+}
+
+// Bisection method to find a root within the interval [0, 1]
+double bisection() {
+    double lo = 0, hi = 1;
+    double tolerance = 1e-7;  // Adjust tolerance as needed
+
+    while (fabs(hi - lo) > tolerance) {
+        double mid = (lo + hi) / 2;
+        if (f(lo) * f(mid) <= 0) {
+            hi = mid;
+        } else {
+            lo = mid;
+        }
+    }
+
+    return (lo + hi) / 2;
+}
+
+int main() {
+    int p, q, r, s, t, u;
+
+    // Read input values until EOF (End-Of-File)
+    while (scanf("%d %d %d %d %d %d", &p, &q, &r, &s, &t, &u) != EOF) {\\20. Solve It
+        // Check if a solution exists within the interval [0, 1]
+        if (f(0) * f(1) > 0) {
+            printf("No solution\n");
+        } else {
+            double root = bisection();
+            printf("%.4lf\n", root);  // Print root with 4 decimal places
+        }
+    }
+
+    return 0;
+}
