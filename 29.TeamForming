@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, sum = 0, i;
+
+    // Input validation (optional)
+    do {
+        printf("Enter the number of elements (positive integer): ");
+        if (scanf("%d", &n) != 1 || n <= 0) {
+            printf("Invalid input. Please enter a positive integer.\n");
+            // Handle invalid input (e.g., clear input buffer)
+            scanf("%*[^\n]"); // Clear remaining characters in input buffer
+        }
+    } while (n <= 0);
+
+    int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory
+    if (arr == NULL) {
+        fprintf(stderr, "Memory allocation failed!\n");
+        return 1; // Indicate error
+    }
+
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    qsort(arr, n, sizeof(int), compareInts); // Use qsort for sorting 29.TeamForming
+
+    // Calculate sum of absolute differences between consecutive elements
+    for (i = 0; i < n - 1; i += 2) {
+        if (arr[i] != arr[i + 1]) {
+            sum += abs(arr[i + 1] - arr[i]);
+        }
+    }
+
+    printf("Sum of absolute differences: %d\n", sum);
+
+    free(arr); // Free allocated memory
+    return 0;
+}
+
+// Comparison function for qsort (optional, but recommended for clarity)
+int compareInts(const void *a, const void *b) {
+    return *(const int *)a - *(const int *)b;
+}
