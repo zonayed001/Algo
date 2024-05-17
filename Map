@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100 // Define a maximum size for the hash table
+
+typedef struct {
+  int key;
+  void *value; // Can hold any data type as a pointer
+} Entry;
+
+Entry *hash_table[MAX_SIZE]; // Array of pointers to entries
+
+int hash_function(int key) {
+  // Simple hash function (can be improved)
+  return key % MAX_SIZE;
+}
+
+void insert(int key, void *value) {
+  int index = hash_function(key);
+
+  // Handle collisions (multiple entries with the same hash)
+  while (hash_table[index] != NULL) {
+    if (hash_table[index]->key == key) { // Update value if key already exists
+      hash_table[index]->value = value;
+      return;
+    }
+    index = (index + 1) % MAX_SIZE; // Linear probing for collision handling
+  }
+
+  // Create a new entry
+  Entry *new_entry = (Entry *)malloc(sizeof(Entry));
+  new_entry->key = key;
+  new_entry->value = value;
+  hash_table[index] = new_entry;
+}
+
+void *get(int key) {
+  int index = hash_function(key);
+
+  while (hash_table[index] != NULL) {
+    if (hash_table[index]->key == key) {
+      return hash_table[index]->value; // Return value for the key
+    }
+    index = (index + 1) % MAX_SIZE;
+  }
+
+  return NULL; // Key not found
+}
+
+int main() {
+  insert(10, "Hello");
+  insert(20, "World");
+
+  char *value = (char *)get(10);
+  if (value != NULL) {
+    printf("Value for key 10: %s\n", value);
+  } else {
+    printf("Key not found.\n");
+  }
+
+  return 0;
+} MAP
