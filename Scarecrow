@@ -1,0 +1,21 @@
+Scarecrow #include <stdio.h>
+
+int main() {
+    int crowCount = 0;
+    char answer;
+
+    do {
+        printf("Did a crow land on the scarecrow (y/n)? ");
+        scanf(" %c", &answer); // Read a single character with space before
+
+        if (answer == 'y' || answer == 'Y') {
+            crowCount++;
+        } else if (answer != 'n' && answer != 'N') {
+            printf("Invalid input. Please enter 'y' or 'n'.\n");
+        }
+    } while (answer != 'n' && answer != 'N');
+
+    printf("The scarecrow saw %d crows.\n", crowCount);
+
+    return 0;
+} 
