@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+#define MAXN 100003 // Adjust if needed
+
+int points[MAXN];
+
+int main() {
+    // freopen not supported in standard C
+
+    int t;
+    scanf("%d", &t);
+
+    for (int tc = 1; tc <= t; ++tc) {
+        int n, q;
+        scanf("%d %d", &n, &q);
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d", &points[i]);
+        }
+
+        printf("Case %d:\n", tc);
+        int a, b;
+
+        while (q--) {
+            scanf("%d %d", &a, &b);
+
+            // Find the first element greater than or equal to a (lower bound)
+            int lower = 0;
+            int upper = n - 1;
+            int mid;
+            while (lower <= upper) {
+                mid = (lower + upper) / 2;
+                if (points[mid] >= a) {
+                    upper = mid - 1;
+                } else {
+                    lower = mid + 1;
+                }
+            }
+            int start = lower;
+
+            // Find the first element greater than b (upper bound)
+            lower = 0;
+            upper = n - 1;
+            while (lower <= upper) {
+                mid = (lower + upper) / 2;
+                if (points[mid] > b) {
+                    upper = mid - 1;
+                } else {
+                    lower = mid + 1;
+                }
+            }
+            int end = lower;
+
+            printf("%d\n", end - start); // Count elements between start (inclusive) and end (exclusive) Points in Segments
+        }
+    }
+
+    return 0;
+}
