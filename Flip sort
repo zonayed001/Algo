@@ -1,0 +1,63 @@
+Flip sort
+#include <stdio.h>
+
+void flip(int arr[], int k) {
+    // Reverse elements from 0 to k (inclusive)
+    for (int i = 0; i <= k / 2; i++) {
+        int temp = arr[i];
+        arr[i] = arr[k - i];
+        arr[k - i] = temp;
+    }
+}
+
+// Recursive Flip Sort function
+void flipSort(int arr[], int n) {
+    if (n == 1) {
+        return; // Base case: single element array is already sorted
+    }
+
+    // Find the index of the maximum element
+    int maxIndex = 0;
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > arr[maxIndex]) {
+            maxIndex = i;
+        }
+    }
+
+    // Two cases:
+    // 1. Maximum element is at the end (no need to flip)
+    if (maxIndex == n - 1) {
+        flipSort(arr, n - 1); // Recursively sort the subarray excluding the last element
+    } else {
+        // 2. Maximum element is not at the end (flip and sort)
+        flip(arr, n - 1); // Flip the entire array
+        flipSort(arr, n); // Recursively sort the entire array
+    }
+}
+
+int main() {
+    int n, i;
+
+    printf("Enter the number of elements (positive integer): ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        fprintf(stderr, "Invalid input. Please enter a positive integer.\n");
+        return 1;
+    }
+
+    int arr[n];
+
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    flipSort(arr, n);
+
+    printf("Sorted array:\n");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+} 
