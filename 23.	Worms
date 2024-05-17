@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int n, m, t, sum = 0;
+
+    // Read the number of elements (n)
+    scanf("%d", &n);
+
+    // Array to store cumulative sums
+    int counts[n];
+
+    // Calculate cumulative sums and store them in the counts array
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &t); // Read the element value
+        sum += t;
+        counts[i] = sum;
+    }
+
+    // Array to store the number of worms for each sum
+    int worms[sum + 1];
+
+    // Find the number of worms for each sum (using a loop similar to C++)
+    int ind = 0;
+    for (int i = 1; i <= sum; i++) {
+        if (i > counts[ind]) {
+            ind++;
+        }
+        worms[i] = ind + 1;
+    }
+
+    // Read the number of queries (m 23.	Worms
+    scanf("%d", &m);
+
+    // Process queries to find the number of worms for each query value
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &t); // Read the query value
+        printf("%d\n", worms[t]); // Print the number of worms for the query
+    }
+
+    return 0;
+}
