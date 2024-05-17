@@ -1,0 +1,34 @@
+#include <stdio.h>
+longest increasing subsequence: 
+#define MAX_N 200001
+
+int main() {
+    int n, k = 1, ans = 0;
+
+    // Read input (assuming fastread is a custom function for faster input)
+    scanf("%d", &n);
+    int a[MAX_N];
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    // Sort the array (assuming sort is a custom sorting function)
+    // You can use qsort from stdlib.h for sorting
+    qsort(a, n, sizeof(int), compareInts); // Replace sort with qsort if needed
+
+    for (int i = 0; i < n; i++) {
+        if (k <= a[i]) {
+            ans++;
+            k++;
+        }
+    }
+
+    printf("%d\n", ans);
+
+    return 0;
+}
+
+// Optional comparison function for qsort (improves readability)
+int compareInts(const void *a, const void *b) {
+    return *(const int *)a - *(const int *)b;
+} 
