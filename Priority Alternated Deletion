@@ -1,0 +1,51 @@
+Priority Alternated Deletion 
+#include <stdio.h>
+
+void priorityDelete(int arr[], int n, int k) {
+    int i, j = 0;
+
+    // Iterate through the array
+    for (i = 0; i < n; i++) {
+        // Check if current element is divisible by k
+        if (arr[i] % k != 0) {
+            // If not divisible, keep the element and move it to the beginning of the modified array
+            arr[j++] = arr[i];
+        }
+    }
+
+    // Reduce the size of the array by the number of deleted elements
+    n = j;
+}
+
+int main() {
+    int n, k, i;
+
+    printf("Enter the number of elements (positive integer): ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        fprintf(stderr, "Invalid input. Please enter a positive integer.\n");
+        return 1;
+    }
+
+    printf("Enter the value of k (positive integer): ");
+    if (scanf("%d", &k) != 1 || k <= 0) {
+        fprintf(stderr, "Invalid input. Please enter a positive integer.\n");
+        return 1;
+    }
+
+    int arr[n];
+
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    priorityDelete(arr, n, k);
+
+    printf("Modified array after deleting elements divisible by %d:\n", k);
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+} 
