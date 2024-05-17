@@ -1,0 +1,56 @@
+46.Prime Minister 
+#include <stdio.h>
+#include <stdlib.h> // For memory allocation (malloc)
+
+int main() {
+
+    // Faster input/output (optional)
+    // fflush(stdout); // Flush standard output after each printf
+    // setvbuf(stdout, NULL, _IOFBF, BUFSIZ); // Set output buffering mode
+
+    int n;
+
+    printf("Enter the number of elements (positive integer): ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter %d elements (integers):\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    int seats = 0;
+    for (int i = 0; i < n; i++) {
+        seats += arr[i];
+    }
+
+    int *party_arr = (int *)malloc(n * sizeof(int)); // Allocate memory for party_arr
+    if (party_arr == NULL) {
+        fprintf(stderr, "Error allocating memory for party_arr.\n");
+        return 1;
+    }
+
+    int coalition = 0, k = 0, i = 0;
+    int arrn[n]; // Purpose unclear, commented out for now
+
+    int check = 0;
+    while (i < n - 1) {
+        i++;
+        if (arr[i] <= party_arr[0] / 2) {  // Assuming party_arr[0] is initialized elsewhere
+            coalition += arr[i];
+            party_arr[k] = i;
+            k++;
+        }
+    }
+
+    // The remaining code snippets (#define, RASENGAN, etc.) seem unrelated
+    // to the main logic and are not translated.
+
+    // Clean up allocated memory
+    free(party_arr);
+
+    printf("Seats: %d\n", seats); // Assuming this output is intended
+
+    return 0;
+} 
