@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdbool.h> // For boolean data type 13.	Bear And Segment
+
+int main() {
+    int t;
+
+    printf("Enter the number of test cases: ");
+    scanf("%d", &t);
+
+    while (t--) {
+        char s[101]; // Array to store the string (adjust size as needed)
+        int count_ones = 0;
+        bool found_segment = false;
+
+        printf("Enter the string: ");
+        scanf("%s", s);
+
+        // Count the total number of '1' characters
+        for (int i = 0; s[i] != '\0'; i++) {
+            if (s[i] == '1') {
+                count_ones++;
+            }
+        }
+
+        // Find the first occurrence of '1'
+        for (int i = 0; s[i] != '\0'; i++) {
+            if (s[i] == '1') {
+                found_segment = true;
+                break;
+            }
+        }
+
+        // Check if all characters from the first '1' onwards are '1's
+        if (found_segment) {
+            for (int i = 0; s[i] != '\0'; i++) {
+                if (s[i] != '1') {
+                    found_segment = false;
+                    break;
+                }
+            }
+        }
+
+        // Print the result
+        if (found_segment && count_ones > 0) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
