@@ -1,0 +1,43 @@
+LIS
+#include <stdio.h>
+
+int max(int a, int b) {
+  return (a > b) ? a : b;
+}
+
+int lis(int arr[], int n) {
+  int L[n]; // Create a table to store lengths of LIS ending at each index
+
+  // Initialize all LIS lengths to 1 (single element subsequence)
+  for (int i = 0; i < n; i++) {
+    L[i] = 1;
+  }
+
+  // Build table in bottom-up manner
+  for (int i = 1; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      if (arr[i] > arr[j] && L[i] < L[j] + 1) {
+        L[i] = L[j] + 1; // If current element is greater than previous and increases LIS length, update
+      }
+    }
+  }
+
+  // Find the maximum LIS length
+  int max_lis = L[0]; // Initialize with first element's LIS length
+  for (int i = 1; i < n; i++) {
+    max_lis = max(max_lis, L[i]);
+  }
+
+  return max_lis;
+}
+
+int main() {
+  int arr[] = {10, 22, 9, 33, 21, 50, 41, 60, 80};
+  int n = sizeof(arr) / sizeof(arr[0]);
+
+  int lis_length = lis(arr, n);
+
+  printf("Length of Longest Increasing Subsequence: %d\n", lis_length);
+
+  return 0;
+} 
