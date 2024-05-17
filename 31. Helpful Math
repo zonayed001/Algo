@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char s[1002]; // Character array to store the string (increased size to accommodate null terminator)
+    int arr[1001];
+    int count = 0;
+
+    printf("Enter the string (containing digits and '+' signs): ");
+    if (fgets(s, sizeof(s), stdin) == NULL) {
+        fprintf(stderr, "Error reading input string.\n");
+        return 1;
+    }
+
+    // Remove trailing newline character (if present)
+    s[strcspn(s, "\n")] = '\0';
+
+    for (int i = 0; i < strlen(s); i++) {
+        if (s[i] == '+') {
+            continue;
+        } else if (s[i] < '0' || s[i] > '9') {
+            fprintf(stderr, "Invalid character in input string: %c\n", s[i]);
+            return 1; // Handle invalid input
+        } else {
+            arr[count++] = s[i] - '0'; // Convert digit character to integer
+        }
+    }
+
+    qsort(arr, count, sizeof(int), compareInts); // Sort the integer array 31. Helpful Math
+
+    for (int i = 0; i < count; i++) {
+        printf("%d", arr[i]);
+        if (i == count - 1) {
+            break;
+        }
+        printf("+");
+    }
+    printf("\n");
+
+    return 0;
+}
+
+// Comparison function for qsort (optional but improves readability)
+int compareInts(const void *a, const void *b) {
+    return *(const int *)a - *(const int *)b;
+}
